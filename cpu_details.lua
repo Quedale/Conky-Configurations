@@ -18,7 +18,7 @@ function initNets()
 			outstr = outstr.."${goto 10}Internal: ${font ADELE:bold:14}${alignr 10}${addr "..line.."}\n"
 			outstr = outstr.."${color1}${font ADELE:bold:size=9}UP : ${upspeed "..line.."} | DOWN : ${downspeed "..line.."}${alignr}${offset -10}${totalup "..line.."} / ${totaldown "..line.."}\n"
 			outstr = outstr.."${color2}${upspeedgraph "..line.." 25,230 66241C FF5A45 100 -l}\n"
-			outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,230 66241C FF5A45 100 -l}\n"	
+			outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,230 66241C FF5A45 100 -l}\n"
 		end
 	end
 	
@@ -94,7 +94,7 @@ function conky_listMounts()
 					label = size.." GB Volume"
 				end
 				
-				if mountpoint ~= nil and mountpoint ~= "[SWAP]" and mountpoint ~= "System\\x20Reserved" then 
+				if mountpoint ~= nil and mountpoint ~= "[SWAP]" and mountpoint ~= "System\\x20Reserved" and mountpoint ~= "/boot/efi" then 
 					local perused = "?%"
 					local used = ""
 					for word in string.gmatch(dftext, "/dev/"..partdevid.."([^\n]*)") do 
@@ -103,10 +103,11 @@ function conky_listMounts()
 						used = toGBFromK(used,0.1)
 					end
 
-					output = output.."${color1}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${font}\n"
-					output = output.."${color1}${voffset -5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."} | WRITE : ${diskio_write "..partdevid.."}${alignr}${font ADELE:bold:size=9}${offset -20}["..partdevid.."]${font}\n"
-					output = output.."${color2}${voffset -10}${diskiograph_read "..partdevid.." 20,220 66241C FF5A45 100 -l}\n"
-					output = output.."${color2}${voffset -15}${diskiograph_write "..partdevid.." 20,220 66241C FF5A45 100 -l}\n"
+					output = output.."${color1}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${alignr}${offset -10}["..mountpoint.."]${font}\n"
+					output = output.."${color2}${voffset -10}${fs_bar 5,230 "..mountpoint.."}\n"
+					output = output.."${color1}${voffset -5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."} | WRITE : ${diskio_write "..partdevid.."}${alignr}${font ADELE:bold:size=9}${offset -10}["..partdevid.."]${font}\n"
+					output = output.."${color2}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 100 -l}\n"
+					output = output.."${color2}${voffset -15}${diskiograph_write "..partdevid.." 20,230 66241C FF5A45 100 -l}\n"
 				end
 
 			end

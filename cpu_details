@@ -1,24 +1,3 @@
-############################################################################################
-# Sidebar-Conky					 					   #
-# by wim66 https://www.google.com/+WillemO						   #
-# 26-5-15										   #
-# "Inspired by" other people's code							   #
-# Calendar, more great conky's http://erikdubois.be/category/conky			   #
-# Jesse Avalos http://speedracker.deviantart.com/					   #
-# Weather font by Kelly Kretchek https://plus.google.com/u/0/103934698784251707937/posts   #
-# Wallpaper http://0rax0.deviantart.com/art/Linux-2014-Wallpaper-457151439		   #
-# Use with Conky-Manager								   #
-# http://www.teejeetech.in/p/conky-manager.html						   #
-#
-#
-#
-# This is the version modified by Theodore Bellas (github.com/theodorebellas)
-# specialized for Linux Mint. If you incur any issues with it, feel free to file a bug report
-# on the Github page. I can't guarantee I'll be able to help, but I'll try!
-#
-#											  
-############################################################################################
-
 background yes
 double_buffer yes
 no_buffers yes
