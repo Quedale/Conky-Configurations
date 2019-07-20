@@ -14,11 +14,15 @@ function initNets()
 		if string.starts(line, "wl") or 
 			string.starts(line, "enp") or
 			string.starts(line, "eth") then
-			outstr = outstr.."\n${voffset -5}${font ADELE:bold:size=15}${color1}${alignc}Interface "..line.."${font}\n"
-			outstr = outstr.."${goto 10}Internal: ${font ADELE:bold:14}${alignr 10}${addr "..line.."}\n"
-			outstr = outstr.."${color1}${font ADELE:bold:size=9}UP : ${upspeed "..line.."} | DOWN : ${downspeed "..line.."}${alignr}${offset -10}${totalup "..line.."} / ${totaldown "..line.."}\n"
-			outstr = outstr.."${color2}${upspeedgraph "..line.." 25,230 66241C FF5A45 100 -l}\n"
-			outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,230 66241C FF5A45 100 -l}\n"
+			
+			local addr=conky_parse('${addr '..line..'}')
+			if addr ~= "No Address" then
+				outstr = outstr.."\n${voffset -5}${font ADELE:bold:size=15}${color1}${alignc}Interface "..line.."${font}\n"
+				outstr = outstr.."${goto 10}Internal: ${font ADELE:bold:14}${alignr 10}"..addr.."\n"
+				outstr = outstr.."${color1}${font ADELE:bold:size=9}UP : ${upspeed "..line.."} | DOWN : ${downspeed "..line.."}${alignr}${offset -10}${totalup "..line.."} / ${totaldown "..line.."}\n"
+				outstr = outstr.."${color2}${upspeedgraph "..line.." 25,230 66241C FF5A45 0 -l}\n"
+				outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,230 66241C FF5A45 0 -l}\n"
+			end
 		end
 	end
 	
@@ -105,9 +109,9 @@ function conky_listMounts()
 
 					output = output.."${color1}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${alignr}${offset -10}["..mountpoint.."]${font}\n"
 					output = output.."${color2}${voffset -10}${fs_bar 5,230 "..mountpoint.."}\n"
-					output = output.."${color1}${voffset -5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."} | WRITE : ${diskio_write "..partdevid.."}${alignr}${font ADELE:bold:size=9}${offset -10}["..partdevid.."]${font}\n"
-					output = output.."${color2}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 100 -l}\n"
-					output = output.."${color2}${voffset -15}${diskiograph_write "..partdevid.." 20,230 66241C FF5A45 100 -l}\n"
+					output = output.."${color1}${voffset -5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."}/s | WRITE : ${diskio_write "..partdevid.."}/s${alignr}${font ADELE:bold:size=9}${offset -10}["..partdevid.."]${font}\n"
+					output = output.."${color2}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
+					output = output.."${color2}${voffset -15}${diskiograph_write "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
 				end
 
 			end
