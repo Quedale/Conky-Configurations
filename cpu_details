@@ -74,6 +74,6 @@ ${goto 10}${voffset -2}${top_mem name 4}${goto 130}${top_mem mem 4}${goto 170}%$
 ${voffset -5}${font ADELE:bold:size=15}${color1}${alignc}Network Usage${font}
 ${lua_parse listNets}
 
-${voffset -5}${font ADELE:bold:size=15}${color1}${alignc}Disk Usage${font}
+${voffset -20}${font ADELE:bold:size=15}${color1}${alignc}Disk Usage${font}
 ${lua_parse listMounts}
 #

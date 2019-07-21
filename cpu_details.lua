@@ -18,10 +18,10 @@ function initNets()
 			local addr=conky_parse('${addr '..line..'}')
 			if addr ~= "No Address" then
 				outstr = outstr.."\n${voffset -5}${font ADELE:bold:size=15}${color1}${alignc}Interface "..line.."${font}\n"
-				outstr = outstr.."${goto 10}Internal: ${font ADELE:bold:14}${alignr 10}"..addr.."\n"
-				outstr = outstr.."${color1}${font ADELE:bold:size=9}UP : ${upspeed "..line.."} | DOWN : ${downspeed "..line.."}${alignr}${offset -10}${totalup "..line.."} / ${totaldown "..line.."}\n"
-				outstr = outstr.."${color2}${upspeedgraph "..line.." 25,230 66241C FF5A45 0 -l}\n"
-				outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,230 66241C FF5A45 0 -l}\n"
+				outstr = outstr.."Internal: ${font ADELE:bold:14}${alignr}"..addr.."\n"
+				outstr = outstr.."${color1}${font ADELE:bold:size=9}UP : ${upspeed "..line.."} | DOWN : ${downspeed "..line.."}${alignr}${totalup "..line.."} / ${totaldown "..line.."}\n"
+				outstr = outstr.."${color2}${upspeedgraph "..line.." 25,240 66241C FF5A45 0 -l}\n"
+				outstr = outstr.."${color2}${voffset -10}${downspeedgraph "..line.." 25,240 66241C FF5A45 0 -l}\n"
 			end
 		end
 	end
@@ -82,9 +82,14 @@ function conky_listMounts()
 	
 	local output = ""
 	for rowCount = 1, #objline do
+		local found_mount = false
+		local model = objline[rowCount].model
 		local childs = objline[rowCount].children
-		
 		if childs ~= nil then
+			--if output ~= "" then
+				output = output.."${color1}${voffset -10}${hr 1}\n"
+			--end
+			output = output.."${color1}${font ADELE:bold:size=11}"..model.."\n"
 			for partCount = 1, #childs do
 				local partdevid = childs[partCount].name
 				local mountpoint = childs[partCount].mountpoint
@@ -106,12 +111,18 @@ function conky_listMounts()
 						used = column(word,3)
 						used = toGBFromK(used,0.1)
 					end
-
-					output = output.."${color1}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${alignr}${offset -10}["..mountpoint.."]${font}\n"
-					output = output.."${color2}${voffset -10}${fs_bar 5,230 "..mountpoint.."}\n"
-					output = output.."${color1}${voffset -5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."}/s | WRITE : ${diskio_write "..partdevid.."}/s${alignr}${font ADELE:bold:size=9}${offset -10}["..partdevid.."]${font}\n"
-					output = output.."${color2}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
-					output = output.."${color2}${voffset -15}${diskiograph_write "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
+					if found_mount ~= true then 
+						output = output.."${voffset 10}"
+						found_mount = true
+					else
+						output = output.."${voffset -5}"
+					end
+					output = output.."${color1}${offset 5}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${font}\n"
+					output = output.."${color1}${offset 5}${voffset -10}${font ADELE:bold:size=9}["..mountpoint.."]\n"
+					output = output.."${color2}${offset 5}${voffset -2}${fs_bar 5,230 "..mountpoint.."}\n"
+					output = output.."${color1}${offset 5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."}/s | WRITE : ${diskio_write "..partdevid.."}/s${alignr}${font ADELE:bold:size=9}${offset -5}["..partdevid.."]${font}\n"
+					output = output.."${color2}${offset 5}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
+					output = output.."${color2}${offset 5}${voffset -15}${diskiograph_write "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
 				end
 
 			end
