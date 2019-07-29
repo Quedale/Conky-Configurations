@@ -86,10 +86,6 @@ function conky_listMounts()
 		local model = objline[rowCount].model
 		local childs = objline[rowCount].children
 		if childs ~= nil then
-			--if output ~= "" then
-				output = output.."${color1}${voffset -10}${hr 1}\n"
-			--end
-			output = output.."${color1}${font ADELE:bold:size=11}"..model.."\n"
 			for partCount = 1, #childs do
 				local partdevid = childs[partCount].name
 				local mountpoint = childs[partCount].mountpoint
@@ -112,13 +108,15 @@ function conky_listMounts()
 						used = toGBFromK(used,0.1)
 					end
 					if found_mount ~= true then 
+						output = output.."${color1}${voffset -10}${hr 1}\n"
+						output = output.."${color1}${font ADELE:bold:size=11}"..model.."\n"
 						output = output.."${voffset 10}"
 						found_mount = true
 					else
 						output = output.."${voffset -5}"
 					end
-					output = output.."${color1}${offset 5}${font ADELE:bold:size=12}"..label.." ${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")${font}\n"
-					output = output.."${color1}${offset 5}${voffset -10}${font ADELE:bold:size=9}["..mountpoint.."]\n"
+					output = output.."${color1}${offset 5}${font ADELE:bold:size=12}"..label.."${font}\n"
+					output = output.."${color1}${offset 5}${voffset -10}${font :size=7}"..mountpoint.." ${alignr}${offset -5}${font ADELE:bold:size=9}${color1}"..used.." / "..size.." ("..perused..")\n"
 					output = output.."${color2}${offset 5}${voffset -2}${fs_bar 5,230 "..mountpoint.."}\n"
 					output = output.."${color1}${offset 5}${font ADELE:bold:size=9}READ : ${diskio_read "..partdevid.."}/s | WRITE : ${diskio_write "..partdevid.."}/s${alignr}${font ADELE:bold:size=9}${offset -5}["..partdevid.."]${font}\n"
 					output = output.."${color2}${offset 5}${voffset -10}${diskiograph_read "..partdevid.." 20,230 66241C FF5A45 0 -t}\n"
